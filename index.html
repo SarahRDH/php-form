@@ -1,11 +1,21 @@
-<html><body><h1>It works! Testing homebrew apache</h1></body></html>
-
-
-<?php phpinfo(); ?>
-<?php echo "Hello World"; ?>
-
-<?php { ?>
-var_dump('blah');
-<?php } ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple PHP and MySQL Form</title>
+</head>
+<body>
+	<h1>Welcome to the Sample Form!</h1>
+    <p>Fill out the form and test it out.</p>
+    <p>Once you submit the form, you will be redirected to the welcome.php page.</p>    
+    <?php
+        include 'form.php';
+    ?>    
+    <form action="welcome.php" method="POST">
+            Name: <input type="text" name="name"><br>
+            E-mail: <input type="text" name="email"><br>
+            <input type="submit">
+    </form>
+</body>
+</html>
 
 
