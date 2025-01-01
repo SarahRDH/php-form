@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Simple PHP and MySQL Form</title>
-</head>
-<body>
-	<h1>Welcome to the Sample Form!</h1>
-    <p>Fill out the form and test it out.</p>
-    <p>Once you submit the form, you will be redirected to the welcome.php page.</p>    
-    <?php
-        include 'form.php';
-    ?>    
-    <form action="welcome.php" method="POST">
-            Name: <input type="text" name="name"><br>
-            E-mail: <input type="text" name="email"><br>
-            <input type="submit">
-    </form>
-</body>
+    <head>
+        <title>Simple PHP and MySQL Form</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1>Welcome to the Sample Form!</h1>
+        <p>Once you click submit, JavaScript will validate your entries, PHP will ensure secure data, submit the form, and insert the data into the database.</p>      
+        
+        <form id="js-input-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
+            Name: <input type="text" name="name">
+            <br><br>
+            E-mail: <input type="text" name="email">
+            <br><br>
+            
+            <div class="success-message"></div>
+
+            <button>
+                <input  class="submit-btn" type="submit" name="submit" value="Submit Data to MySQL"> 
+            </button>
+            <button>
+                <input class="delete-btn" type="delete" name="delete" value="Delete All MySQL Data">
+            </button>
+        </form>
+
+        <div class="error-message"></div>
+
+
+    <?php include 'form.php'; ?> 
+
+    <script type="text/javascript" src="script.js"></script>
+    </body>
 </html>
 
 
