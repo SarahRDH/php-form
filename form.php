@@ -73,15 +73,16 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
     echo htmlentities(clean_input($name)) . '<br>';
     echo htmlentities(clean_input($email)) . '<br>';
     echo htmlentities($hashed_password) . '<br>';
+    echo "<hr>";
 
     // SQL query to insert data into a table
     $insert_sql = "INSERT INTO form_data (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
 
     // Report success or error
     if ($conn->query($insert_sql) === TRUE) {
-        echo "New record created successfully.";
+        echo "<p style='color:green;'>New record created successfully.</p>";
     } else {
-        echo "Error: " . $insert_sql . "<br>" . $conn->error;
+        echo "<p style='color:red;'>Error: " . $insert_sql . "<br>" . $conn->error . "</p>";
     }
 
     // SQL query to fetch data from a table
@@ -91,9 +92,24 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
     if ($result->num_rows > 0) {
         echo "<h2>Data in MySQL:</h2>";
         // Output data of each row
+        echo "<table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Registration Date</th>
+            </tr>";
         while($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"] . " - Name: " . $row["name"] . " - Email: " . $row["email"]. " - Password: " . $row["password"]. " - Date: " . $row["reg_date"]. "<br>";
+            echo "<tr>
+                <td>" . $row["id"] . "</td>
+                <td>" . $row["name"] . "</td>
+                <td>" . $row["email"] . "</td>
+                <td>" . $row["password"] . "</td>
+                <td>" . $row["reg_date"] . "</td>
+            </tr>";
         }
+    echo "</table>";
     } else {
         echo "0 results";
     }
@@ -105,7 +121,7 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
         // Reset the auto-increment value
         $reset_auto_increment_sql = "ALTER TABLE form_data AUTO_INCREMENT = 1";
         if ($conn->query($reset_auto_increment_sql) === TRUE) {
-            echo "All records deleted and auto-increment value reset successfully.";
+            echo "<p style='text-align: center; color: green;'>All records deleted and auto-increment value reset successfully.</p>";
         } else {
             echo "Error resetting auto-increment value: " . $conn->error;
         }

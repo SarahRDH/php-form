@@ -7,7 +7,6 @@ let form = document.querySelector('#js-input-form');
 let successMessage = document.querySelector('.success-message');
 
 submitButton.disabled = true;
-successMessage.innerHTML = 'Please complete the fields above.';
 
 function validateForm() {
     function validate() {

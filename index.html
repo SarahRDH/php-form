@@ -5,24 +5,28 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div class="header purple">
+        <div class="header purple container-lg">
             <h1>Welcome to the Sample Form!</h1>
             <div class="author">
                 A demo by Sarah Johnson
             </div>
         </div>
         <div class="container"> 
-            <p class="description">Once you click submit, JavaScript will validate your entries, PHP will ensure secure data, submit the form, and insert the data into the database.</p>        
             
             <form id="js-input-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
                 Name: <input type="text" name="name">
-                <br><br>
+                <br>
                 E-mail: <input type="text" name="email">
-                <br><br>
+                <br>
                 Password: <input type="password" name="password">
-                <br><br>
-                
-                <div class="success-message"></div>
+
+                <div class="messaging">
+                    <div class="success-message"></div>
+                    <div class="error-message"></div>    
+                </div>
+         
+                <p class="description">Once you click submit, JavaScript will validate your entries, PHP will ensure secure data, submit the form, and insert the data into the database.</p>        
+
                 <div class="btn-wrap">
                     <button>
                         <input  class="submit-btn" type="submit" name="submit" value="Submit Data to MySQL"> 
@@ -34,14 +38,16 @@
            
             </form>
 
-            <div class="error-message"></div>
-         
+        </div>
+
+        <div class="container-lg">
             <?php include 'form.php'; ?> 
         </div>
 
     <script type="text/javascript" src="script.js"></script>
     </body>
-    <footer>Built with pure PHP and vanilla JS on Apache with MySQL database.</footer>
+
+    <footer class="container-lg">Built with pure PHP and vanilla JS on Apache with MySQL database.</footer>
 </html>
 
 

@@ -7,8 +7,11 @@
     line-height: 20px;
 }
 
+html {
+    height: 100%;
+}
+
 .header {
-    padding: 20px 10px;
     margin-bottom: 40px;
 }
 
@@ -17,7 +20,11 @@
     color: #fff;
 }
 
-button:focus {border: none; outline: none;}
+button:focus {
+    border: none; 
+    outline: none;
+}
+
 svg:not(:root) {
   overflow: hidden;
 }
@@ -36,10 +43,17 @@ h1 {
 
 h2 {
     margin: 10px 0;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.6);
 }
 
 p {
     margin: 8px 0;
+}
+
+hr {
+    margin: 20px 0;
+    border: 1px solid gray;
 }
 
 .author {
@@ -53,10 +67,28 @@ p {
     padding: 0 40px;
 }
 
+.container-lg {
+    max-width: 1440;
+    margin: 0 auto;
+    padding: 20px 10px;
+    margin-bottom: 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 40px auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .btn-wrap {
     display: flex;
     column-gap: 20px;
-    margin: 8px 0 40px;
+    margin: 8px 0;
 }
 
 button {
@@ -64,8 +96,33 @@ button {
     align-items: center;
     justify-content: center;
     padding: 8px 16px;
-    width: fit-content;
-    min-width: 250px;    
+    width: 50%;
+    cursor: pointer;
+    background-color: slategray;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: rgba(110, 104, 188);
+}
+
+button input {
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+}
+
+button [disabled] {
+    cursor: not-allowed;
+    border: none;
+}
+
+button [disabled]:hover {
+    cursor: not-allowed;
+    border: none;
+    color: transparent;
 }
 
 button input {
@@ -85,8 +142,26 @@ button input {
     margin: 8px 0;
 }
 
+table {
+    border: none;
+    width: 100%;
+}
+
+th {
+    background-color: slategray;;
+    color: #fff;
+    font-size: 16px;
+    padding: 8px;
+}
+
+td {
+    background-color: #fff;
+    color: gray;
+    padding: 8px;
+    border: 1px solid rgb(110, 104, 188);
+}
+
 footer {
-    padding: 20px 10px;
     background-color: gray;
     color: #fff;
 }
