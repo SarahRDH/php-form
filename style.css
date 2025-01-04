@@ -75,6 +75,16 @@ button input {
     text-align: center;
 }
 
+.error-message {
+    color: red;
+    margin: 8px 0;
+}
+
+.success-message {
+    color: green;
+    margin: 8px 0;
+}
+
 footer {
     padding: 20px 10px;
     background-color: gray;

@@ -28,6 +28,15 @@ function make_table($conn){
         echo "Error creating table: " . $conn->error;
     }
 
+    // Check if the 'password' column exists
+    $result = $conn->query("SHOW COLUMNS FROM form_data LIKE 'password'");
+    if ($result->num_rows == 0) {
+        // Add 'password' column if it does not exist
+        $sql = "ALTER TABLE form_data ADD password VARCHAR(255) NOT NULL";
+        if ($conn->query($sql) !== TRUE) {
+            echo "Error altering table: " . $conn->error;
+        }
+    }
     // // SQL query to insert test data
     // if ($conn->query("SELECT * FROM form_data")->num_rows == 0) {
     //     $insert_sql = "INSERT INTO form_data (name, email) VALUES ('John Doe', 'john@example.com'), ('Jane Smith', 'jane@example.com')";
@@ -38,29 +47,35 @@ function make_table($conn){
     //     }
     // } else {
     //     echo "Table form_data is not empty, skipping test data insertion.";
-    // }
+    // } 
 }
 
 $name = '';
 $email = '';
+$password = '';
+$hashed_password = '';
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['password'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
       
     function clean_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
+        
         return $data;
     }
 
     echo "<h2>Your Sanitized Data (as it appears in the source code):</h2>";
     echo htmlentities(clean_input($name)) . '<br>';
     echo htmlentities(clean_input($email)) . '<br>';
+    echo htmlentities($hashed_password) . '<br>';
 
     // SQL query to insert data into a table
-    $insert_sql = "INSERT INTO form_data (name, email) VALUES ('$name', '$email')";
+    $insert_sql = "INSERT INTO form_data (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
 
     // Report success or error
     if ($conn->query($insert_sql) === TRUE) {
@@ -77,14 +92,11 @@ if (isset($_POST['submit'])) {
         echo "<h2>Data in MySQL:</h2>";
         // Output data of each row
         while($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"]. " - Name: " . $row["name"]. " - Email: " . $row["email"]. "<br>";
+            echo "id: " . $row["id"] . " - Name: " . $row["name"] . " - Email: " . $row["email"]. " - Password: " . $row["password"]. " - Date: " . $row["reg_date"]. "<br>";
         }
     } else {
         echo "0 results";
     }
-
-    //reset the form
-    $_POST = array();
 
 } else if (isset($_POST['delete'])) {
     // Delete all data from the table and reset the auto-increment value
@@ -102,6 +114,8 @@ if (isset($_POST['submit'])) {
     }
 }
 
+//reset the form
+$_POST = array(); 
 
 $conn->close();
 ?>
