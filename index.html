@@ -5,12 +5,12 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div class="header purple container-lg">
+        <header class="header purple container-lg">
             <h1>Welcome to the Sample Form!</h1>
             <div class="author">
                 A demo by Sarah Johnson
             </div>
-        </div>
+        </header>
         <div class="container"> 
             
             <form id="js-input-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">  
@@ -44,10 +44,11 @@
             <?php include 'form.php'; ?> 
         </div>
 
+        <footer class="container-lg">Built with pure PHP and vanilla JS on Apache with MySQL database.</footer>
+
     <script type="text/javascript" src="script.js"></script>
     </body>
 
-    <footer class="container-lg">Built with pure PHP and vanilla JS on Apache with MySQL database.</footer>
 </html>
 
 

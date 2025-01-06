@@ -1,8 +1,9 @@
 <?php
+
 $servername = "localhost";
 $username = "sarah";
 $password = "Thisisan3xampl3";
-$dbname = "seimens_form";
+$dbname = "siemens_form";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -20,6 +21,7 @@ function make_table($conn){
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(30) NOT NULL,
         email VARCHAR(50) NOT NULL,
+        password VARCHAR(255) NOT NULL,
         reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )";
     
@@ -28,15 +30,6 @@ function make_table($conn){
         echo "Error creating table: " . $conn->error;
     }
 
-    // Check if the 'password' column exists
-    $result = $conn->query("SHOW COLUMNS FROM form_data LIKE 'password'");
-    if ($result->num_rows == 0) {
-        // Add 'password' column if it does not exist
-        $sql = "ALTER TABLE form_data ADD password VARCHAR(255) NOT NULL";
-        if ($conn->query($sql) !== TRUE) {
-            echo "Error altering table: " . $conn->error;
-        }
-    }
     // // SQL query to insert test data
     // if ($conn->query("SELECT * FROM form_data")->num_rows == 0) {
     //     $insert_sql = "INSERT INTO form_data (name, email) VALUES ('John Doe', 'john@example.com'), ('Jane Smith', 'jane@example.com')";
@@ -60,7 +53,7 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
     $email = $_POST['email'];
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-      
+
     function clean_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -103,13 +96,13 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
         while($row = $result->fetch_assoc()) {
             echo "<tr>
                 <td>" . $row["id"] . "</td>
-                <td>" . $row["name"] . "</td>
-                <td>" . $row["email"] . "</td>
+                <td>" . htmlspecialchars($row["name"]) . "</td>
+                <td>" . htmlspecialchars($row["email"]) . "</td>
                 <td>" . $row["password"] . "</td>
                 <td>" . $row["reg_date"] . "</td>
             </tr>";
         }
-    echo "</table>";
+        echo "</table>";
     } else {
         echo "0 results";
     }
@@ -130,8 +123,10 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
     }
 }
 
+$conn->close();
+
 //reset the form
 $_POST = array(); 
 
-$conn->close();
 ?>
+
