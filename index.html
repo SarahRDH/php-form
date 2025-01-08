@@ -19,23 +19,27 @@
                 E-mail: <input type="text" name="email">
                 <br>
                 Password: <input type="password" name="password">
-
+                <br>
+                Choose the correct option:
+                <br>
+                <span><input id="tabs" type="radio" name="preference" value="tabs"> Tabs</span>   
+                <span><input id="spaces" type="radio" name="preference" value="spaces"> Spaces</span>
+            
                 <div class="messaging">
-                    <div class="success-message"></div>
                     <div class="error-message"></div>    
+                    <div class="success-message"></div>
                 </div>
-         
+            
                 <p class="description">Once you click submit, JavaScript will validate your entries, PHP will ensure secure data, submit the form, and insert the data into the database.</p>        
-
+            
                 <div class="btn-wrap">
                     <button>
-                        <input  class="submit-btn" type="submit" name="submit" value="Submit Data to MySQL"> 
+                        <input class="submit-btn" type="submit" name="submit" value="Submit Data to MySQL"> 
                     </button>
                     <button>
                         <input class="delete-btn" type="delete" name="delete" value="Delete All MySQL Data">
                     </button>
                 </div>
-           
             </form>
 
         </div>

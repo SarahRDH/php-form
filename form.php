@@ -13,45 +13,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-make_table($conn);
-
-function make_table($conn){
-    // SQL query to create table if it does not exist
-    $sql = "CREATE TABLE IF NOT EXISTS form_data (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(30) NOT NULL,
-        email VARCHAR(50) NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )";
-    
-    // Report error
-    if ($conn->query($sql) !== TRUE) {
-        echo "Error creating table: " . $conn->error;
-    }
-
-    // // SQL query to insert test data
-    // if ($conn->query("SELECT * FROM form_data")->num_rows == 0) {
-    //     $insert_sql = "INSERT INTO form_data (name, email) VALUES ('John Doe', 'john@example.com'), ('Jane Smith', 'jane@example.com')";
-    //     if ($conn->query($insert_sql) === TRUE) {
-    //         echo "Test data inserted successfully.";
-    //     } else {
-    //         echo "Error inserting test data: " . $conn->error;
-    //     }
-    // } else {
-    //     echo "Table form_data is not empty, skipping test data insertion.";
-    // } 
-}
-
 $name = '';
 $email = '';
 $password = '';
 $hashed_password = '';
+$preference = '';
 
-if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['password'])) {
+if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['preference'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $preference = $_POST['preference'];
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     function clean_input($data) {
@@ -66,10 +38,11 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
     echo htmlentities(clean_input($name)) . '<br>';
     echo htmlentities(clean_input($email)) . '<br>';
     echo htmlentities($hashed_password) . '<br>';
+    echo htmlentities(clean_input($preference)) . '<br>';
     echo "<hr>";
 
     // SQL query to insert data into a table
-    $insert_sql = "INSERT INTO form_data (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
+    $insert_sql = "INSERT INTO form_data (name, email, password, preference) VALUES ('$name', '$email', '$hashed_password', '$preference')";
 
     // Report success or error
     if ($conn->query($insert_sql) === TRUE) {
@@ -91,6 +64,7 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
                 <th>Name</th>
                 <th>Email</th>
                 <th>Password</th>
+                <th>Preference</th>
                 <th>Registration Date</th>
             </tr>";
         while($row = $result->fetch_assoc()) {
@@ -99,6 +73,7 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
                 <td>" . htmlspecialchars($row["name"]) . "</td>
                 <td>" . htmlspecialchars($row["email"]) . "</td>
                 <td>" . $row["password"] . "</td>
+                <td>" . htmlspecialchars($row["preference"]) . "</td>
                 <td>" . $row["reg_date"] . "</td>
             </tr>";
         }
@@ -129,4 +104,3 @@ $conn->close();
 $_POST = array(); 
 
 ?>
-

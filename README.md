@@ -146,3 +146,60 @@ if ($conn->connect_error) {
 echo "Connected successfully";
 ?>
 ```
+
+Insert test data into the db:
+```php
+if ($conn->query("SELECT * FROM form_data")->num_rows == 0) {
+    $insert_sql = "INSERT INTO form_data (name, email) VALUES ('John Doe', 'john@example.com'), ('Jane Smith', 'jane@example.com')";
+    if ($conn->query($insert_sql) === TRUE) {
+        echo "Test data inserted successfully.";
+    } else {
+        echo "Error inserting test data: " . $conn->error;
+    }
+} else {
+    echo "Table form_data is not empty, skipping test data insertion.";
+}
+```
+
+Add additional columns if needed:
+```php
+function add_preference_column($conn) {
+    $result = $conn->query("SHOW COLUMNS FROM form_data LIKE 'preference'");
+    if ($result->num_rows == 0) {
+        $sql = "ALTER TABLE form_data ADD preference VARCHAR(10) NOT NULL";
+        if ($conn->query($sql) !== TRUE) {
+            echo "Error adding preference column: " . $conn->error;
+        }
+    }
+}
+
+add_preference_column($conn);
+```
+
+Create a table in PHP:
+```php
+
+function make_table($conn){
+    // SQL query to create table if it does not exist
+    $sql = "CREATE TABLE IF NOT EXISTS form_data (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(30) NOT NULL,
+        email VARCHAR(50) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        preference VARCHAR(10) NOT NULL,
+        reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )";
+    
+    // Report error
+    if ($conn->query($sql) !== TRUE) {
+        echo "Error creating table: " . $conn->error;
+    }
+}
+
+make_table($conn);
+
+```
+
+*TODO*
+Troubleshoot HTTPS
+Fix page reload issue
