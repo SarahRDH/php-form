@@ -100,7 +100,4 @@ if (isset($_POST['submit']) && !empty($_POST['name']) && !empty($_POST['email'])
 
 $conn->close();
 
-//reset the form
-$_POST = array(); 
-
 ?>
